@@ -18,9 +18,21 @@ Connection();
 
 const app = express();
 
+app.use(
+  cors({
+    origin: ["https://blog-app-backend-ebon.vercel.app/"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
+
 app.use(express.static(path.resolve(__dirname, "build")));
 app.use(cors());
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Server is listening...");
+});
 
 app.use("/user", userRoutes);
 app.use("/blog", blogRoutes);
